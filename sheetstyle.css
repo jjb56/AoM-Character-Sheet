@@ -1,0 +1,260 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: #520;
+    margin-inline: 12%;
+    position: relative;
+    overflow-x: hidden;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.stockcake.com/public/9/c/4/9c424275-3cb4-44f6-9c81-b7ebe22fc986/candlelit-wooden-table-stockcake.jpg') center center no-repeat;
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 1;
+}
+.container {
+    padding: 20px;
+    max-width: 1400px;
+    background: linear-gradient(rgba(255,221,170,0.7), rgba(255,221,170,0.7)), url('https://img.pikbest.com/background/20220119/old-paper-texture-background-image_6225012.jpg!w700wp');
+    /*background: #fda;
+    background-image: url('https://img.pikbest.com/background/20220119/old-paper-texture-background-image_6225012.jpg!w700wp');*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    position: relative;
+    margin: 0 auto;
+    padding: 2rem;
+    z-index: 1;
+    border-radius: 20px;
+}
+.logo {
+    font-family: 'Algerian', serif;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.ability-scores {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 30px;
+}
+.ability {
+    flex: 1;
+    text-align: center;
+}
+.ability input {
+    text-align: center;
+    line-height: 48px;
+    font-size: 28pt;
+}
+.columns {
+    display: flex;
+    gap: 20px;
+}
+.column {
+    flex: 1;
+}
+.box {
+    border: 2px solid #520;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+label, input, select, textarea {
+    font-family: sans-serif;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+}
+input[type="number"] {
+    width: 1fr;
+}
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button {
+    /* Chrome, Safari, Edge, Opera */
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    /* Firefox */
+    -moz-appearance: textfield;
+}
+.row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.save-row {
+    display: grid;
+    grid-template-columns: 20px 1fr 50px;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+.skill-row {
+    display: grid;
+    grid-template-columns: 1fr 10fr 4fr 4fr 4fr;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+.basics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+.basics-row input {
+    line-height: 32px;
+    text-align: center;
+    font-size: 18pt;
+}
+.weapon-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr 1fr 2fr;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.heading {
+    font-weight: bold;
+}
+.death-saves {
+    display: flex;
+}
+.mana-zone {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+.mana-zone input {
+    line-height: 32px;
+    text-align: center;
+    font-size: 18pt;
+}
+.constant-zone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+.constant-zone input {
+    line-height: 32px;
+    text-align: center;
+    font-size: 18pt;
+}
+.spell-skills {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+    text-align: left;
+}
+.spell-skills input {
+    text-align: center;
+}
+.spell-area {
+    margin-bottom: 5px;
+}
+.spell-row {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 3fr 2fr 3fr 1fr 3fr;
+}
+.epic-spell-row {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 3fr 1fr 2fr 3fr 1fr 3fr 13fr;
+}
+.copyright {
+    color: #888;
+    text-align: center;
+}
+#death-saves-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-template-rows: repeat(2, 1fr);    /* 2 rows */
+    width: 100%;
+    height: 36px;
+    padding: 0; /* or a small padding like 2px */
+    box-sizing: border-box;
+    align-items: center;
+    justify-items: center;
+}
+#death-saves-container input[type="checkbox"] {
+    margin: 0;           /* remove default spacing */
+}
+#floating-buttons {
+    position: fixed;
+    top: 50%;
+    left: 1%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(240, 240, 240, 0.7);
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+}
+#floating-buttons button {
+    cursor: pointer;
+    padding: 6px 10px;
+    font-weight: bold;
+}
+@media print {
+    /* Remove all visual effects and background images */
+    body, .container {
+    background: none !important;
+    box-shadow: none !important;
+    }
+
+    body::before {
+    display: none !important; /* Hide background pseudo element */
+    }
+
+    /* Remove page margins and padding */
+    body {
+    margin: 0 !important;
+    padding: 0 !important;
+    }
+    input, textarea, select, body {
+    font-size: 8pt !important;
+    line-height: 8pt !important;
+    }
+
+    /* Ensure each .container starts on its own page and fills it */
+    .container {
+    page-break-after: always;
+    width: 8.5in;
+    height: 11in; /* Adjust if you want strict A4/Letter sizing */
+    padding: 0.5in;
+    border-radius: 0;
+    }
+
+    /* Hide UI-only elements like floating buttons */
+    .no-print, #floating-buttons, .logo, br {
+    display: none !important;
+    }
+}
