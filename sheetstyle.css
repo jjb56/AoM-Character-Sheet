@@ -122,14 +122,34 @@ input[type=number] {
     gap: 5px;
     text-align: center;
 }
-.basics-row input {
+.defense-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+.basics-row input, .defense-stat-row input {
     line-height: 32px;
     text-align: center;
     font-size: 18pt;
 }
+.basics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
 .weapon-row {
     display: grid;
     grid-template-columns: 3fr 2fr 1fr 2fr;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.armor-row {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
     align-items: center;
     margin-bottom: 2px;
 }
