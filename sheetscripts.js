@@ -294,6 +294,9 @@ function saveData() {
     a.href = URL.createObjectURL(blob);
     a.download = `${characterName}.json`;
     a.click();
+
+    // After loading everything
+    unsavedChanges = false;
 } 
 
 function loadData() {
@@ -325,7 +328,51 @@ function loadData() {
         reader.readAsText(file);
     });
     input.click();
+
+    // After loading everything
+    unsavedChanges = false;
 }
+
+let unsavedChanges = false;
+
+// Set unsavedChanges = true whenever the user modifies any field
+document.querySelectorAll("input, select, textarea").forEach(el => {
+    el.addEventListener("input", () => {
+        unsavedChanges = true;
+    });
+});
+
+// Mark data as saved
+function saveData() {
+    const data = {};
+    const inputs = document.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
+        if (input.id) {
+            if (input.type === "checkbox") {
+                data[input.id] = input.checked;
+            } else {
+                data[input.id] = input.value;
+            }
+        }
+    });
+
+    const characterName = document.getElementById("character-name")?.value || "myCharacter";
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${characterName}.json`;
+    a.click();
+
+    unsavedChanges = false; // ✅ Mark as saved
+}
+
+// Warn user before leaving the page
+window.addEventListener("beforeunload", function (e) {
+    if (unsavedChanges) {
+        e.preventDefault();
+        e.returnValue = ""; // This triggers the confirmation dialog in most browsers
+    }
+});
 
 // ========== Page Load ==========
 

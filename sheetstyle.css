@@ -243,6 +243,69 @@ input[type=number] {
     padding: 6px 10px;
     font-weight: bold;
 }
+@media (max-width: 768px) {
+  body {
+    margin-inline: 4%;
+    font-size: 16px;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  .header-grid {
+    grid-template-columns: 1fr; /* Stack inputs vertically */
+  }
+
+  .ability-scores {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .columns {
+    flex-direction: column; /* Stack columns instead of side by side */
+    gap: 1rem;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  .save-row,
+  .skill-row,
+  .defense-stat-row,
+  .basics-row,
+  .mana-zone,
+  .constant-zone,
+  .spell-skills,
+  .spell-row,
+  .epic-spell-row,
+  .weapon-row,
+  .armor-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .spell-skills > * {
+    flex: 1 1 30%;
+  }
+
+  #floating-buttons {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+  }
+
+  #floating-buttons button {
+    font-size: 14px;
+    padding: 4px 6px;
+  }
+}
 @media print {
     /* Remove all visual effects and background images */
     body, .container {
