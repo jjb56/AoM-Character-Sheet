@@ -1,29 +1,18 @@
 
 
 // ========== Initialize Constants ==========
-const abilityScoreMap = {
-    str: "score-strength",
-    dex: "score-dexterity",
-    con: "score-constitution",
-    int: "score-intelligence",
-    wis: "score-wisdom",
-    cha: "score-charisma",
-    luc: "score-luck"
-}
-
-const saveMap = {
-    strength: "save-total-strength",
-    dexterity: "save-total-dexterity",
-    constitution: "save-total-constitution",
-    intelligence: "save-total-intelligence",
-    wisdom: "save-total-wisdom",
-    charisma: "save-total-charisma",
-    luck: "save-total-luck"
+const saveMap = { //saving throws
+    "strengthsavingthrow": "save-total-strength",
+    "dexteritysavingthrow": "save-total-dexterity",
+    "constitutionsavingthrow": "save-total-constitution",
+    "intelligencesavingthrow": "save-total-intelligence",
+    "wisdomsavingthrow": "save-total-wisdom",
+    "charismasavingthrow": "save-total-charisma",
+    "lucksavingthrow": "save-total-luck"
 };
-
-const skillMap = {
+const skillMap = { //skills
     "acrobatics": "skill-total-acrobatics",
-    "animal-handling": "skill-total-animal-handling",
+    "animalhandling": "skill-total-animal-handling",
     "artificing": "skill-total-artificing",
     "athletics": "skill-total-athletics",
     "insight": "skill-total-insight",
@@ -53,16 +42,37 @@ const skillMap = {
     "protection": "skill-total-protection",
     "summoning": "skill-total-summoning"
 };
-
-
+const skillSaveMap = {
+    ...skillMap, ...saveMap
+};
+const passiveMap = { //basics
+    "armorclass": "armor-class",
+    "damagereduction": "reduction",
+    "initiative": "initiative",
+    "speed": "speed",
+    "deathsavingthrows": "death-saves-container",
+    "passiveperception": "perception-passive",
+    "fatedice": "fate-dice-total",
+    "spellspreparable": "spells-preparable"
+};
 const groups = {
-    general: ["acrobatics", "animal-handling", "artificing", "athletics", "insight", "intimidation", "perception", "persuasion", "stealth", "survival", "theatrics", "trickery"],
+    general: ["acrobatics", "animalhandling", "artificing", "athletics", "insight", "intimidation", "perception", "persuasion", "stealth", "survival", "theatrics", "trickery"],
     knowledge: ["anatomy", "arcana", "history", "nature", "religion", "society"],
     combat: ["defenses", "melee", "ranged", "unarmed"],
     magic: ["alteration", "clarity", "energy", "essence", "illusion", "influence", "protection", "summoning"],
-    physical: ["strength", "dexterity", "constitution"],
-    mental: ["intelligence", "wisdom", "charisma"]
+    physical: ["strengthsavingthrow", "dexteritysavingthrow", "constitutionsavingthrow"],
+    mental: ["intelligencesavingthrow", "wisdomsavingthrow", "charismasavingthrow"]
 };
+const scoreMap = {
+    str: "score-strength",
+    dex: "score-dexterity",
+    con: "score-constitution",
+    int: "score-intelligence",
+    wis: "score-wisdom",
+    cha: "score-charisma",
+    luc: "score-luck"
+};
+
 
 // ========== Parsing Scripts ==========
 
@@ -70,162 +80,42 @@ function getFeatTextAreas() {
     return Array.from(document.querySelectorAll("textarea[id^='feat-']"));
 }
 
-// Attatch to input event
-getFeatTextAreas().forEach(box => {
-    box.addEventListener("input", applyFeatSkillAndSaveBonuses);
-});
-
-function applyFeatSkillAndSaveBonuses() {
+function parseFeatBonuses() {
     const text = getFeatTextAreas()
         .map(el => el.value.toLowerCase())
         .join("\n");
 
-    //reset everything to base
-    const allInputs = { ...skillMap, ...saveMap };
-    for (let key in allInputs) {
-        const input = document.getElementById(allInputs[key]);
-        if (input) {
-            if (!input.dataset.base) input.dataset.base = input.value;
-            input.value = parseInt(input.dataset.base);
-        }
-    }
-
-    //match patterns like +1 stealth or -2 mental
     const regex = /([+-]\d+)\s+(\w+)/g;
+    const results = [];
+
     let match;
     while ((match = regex.exec(text)) !== null) {
         const bonus = parseInt(match[1]);
         const target = match[2];
-
-        if (groups[target]) {
-            // Apply to group
-            groups[target].forEach(ref => {
-                const id = skillMap[ref] || saveMap[ref] || ref;
-                const input = document.getElementById(id);
-                if (input) input.value = parseInt(input.value) + bonus;
-            });
-        } else if (skillMap[target]) {
-            // Apply to skill
-            const input = document.getElementById(skillMap[target]);
-            if (input) input.value = parseInt(input.value) + bonus;
-        } else if (saveMap[target]) {
-            // Apply to save
-            const input = document.getElementById(saveMap[target]);
-            if (input) input.value = parseInt(input.value) + bonus;
-        }
+        results.push({ bonus, target });
     }
-}
 
+    return results;
+}
 
 // ========== Data Uptating Scripts ==========
 
 // Update all
 function updateAll() {
-    updateBenchmark();
-    updateSkillsAndSaves();
-    applyFeatSkillAndSaveBonuses();
-    updatePassiveValues();
-    updateDeathSaves();
-    //updateFeatPassiveBonuses
+    calculateBenchmark();
     syncManaFields("mana-current-p1", "mana-current-p2");
+    calculateSkillsAndSaves();
+    applyFeatSkillAndSaveBonuses();
+    calculatePassiveValues();
+    applyFeatPassiveValueBonuses();
+    updateDeathSaves();
 }
 document.querySelectorAll("input, select, textarea").forEach(el => {
     el.addEventListener("input", updateAll);
 });
 
-// Skills and saves
-function updateSkillsAndSaves() {
-    const benchmark = parseInt(document.getElementById("benchmark-p1").value) || 0;
-
-    for (const [ability, saveId] of Object.entries(saveMap)) {
-        const abilityScore = parseInt(document.getElementById(`score-${ability}`)?.value || 0);
-        const isFocused = document.getElementById(`save-focus-${ability}`)?.checked; // You must have checkboxes with these IDs
-        const baseValue = abilityScore + (isFocused ? benchmark : 0);
-
-        const input = document.getElementById(saveId);
-        if (input) {
-            input.dataset.base = baseValue;
-            input.value = baseValue;
-        }
-    }
-
-    for (const [skill, skillId] of Object.entries(skillMap)) {
-        const ranks = parseInt(document.getElementById(`skill-rank-${skill}`)?.value || 0);
-        
-        const select = document.getElementById(`skill-ability-${skill}`);
-        let abilityScore = 0;
-
-        if (select) {
-            const selected = select.value.toLowerCase(); // e.g., "int"
-            const abilityId = abilityScoreMap[selected];
-            if (abilityId) {
-                abilityScore = parseInt(document.getElementById(abilityId)?.value || 0);
-            }
-        }
-
-        const base = ranks + abilityScore;
-        const input = document.getElementById(skillId);
-        if (input) {
-            input.dataset.base = base;
-            input.value = base;
-        }
-    }
-}
-
-// Passive values
-function updatePassiveValues() {
-    const getInt = id => parseInt(document.getElementById(id)?.value || 0);
-
-    const perception = getInt("skill-total-perception");
-    document.getElementById("perception-passive").value = 7 + perception;
-
-    const defenses = getInt("skill-total-defenses");
-    document.getElementById("armor-class").value = 7 + defenses;
-
-    const luck = getInt("score-luck");
-    document.getElementById("fate-dice-total").value = luck;
-
-    const magicSkills = groups.magic;
-    magicSkills.forEach(school => {
-        const val = getInt(`skill-total-${school}`);
-        document.getElementById(`atk-${school}`).value = val;
-        document.getElementById(`save-${school}`).value = 7 + val;
-    });
-}
-
-// Death Saves
-function updateDeathSaves() {
-    const con = parseInt(document.getElementById("score-constitution")?.value || 0);
-    const base = Math.max(0, 2 + con); // Ensure non-negative
-
-    const container = document.getElementById("death-saves-container");
-    container.innerHTML = ""; // Clear existing
-
-    for (let i = 0; i < base; i++) {
-        const wrapper = document.createElement("label");
-
-        const box = document.createElement("input");
-        box.type = "checkbox";
-        box.id = `death-save-${i}`;
-
-        wrapper.appendChild(box);
-        container.appendChild(wrapper);
-    }
-}
-
-
-// Equalize current mana fields
-function syncManaFields(id1, id2) {
-    const a = document.getElementById(id1);
-    const b = document.getElementById(id2);
-
-    a.addEventListener("input", () => b.value = a.value);
-    b.addEventListener("input", () => a.value = b.value);
-}
-syncManaFields("mana-current-p1", "mana-current-p2");
-
-// Update benchmark based on xp
-function updateBenchmark() {
+// Calculate benchmark
+function calculateBenchmark() {
     const xp = parseInt(document.getElementById("xp-total").value) || 0;
     
     let benchmark = 4;
@@ -236,10 +126,152 @@ function updateBenchmark() {
     document.getElementById("benchmark-p1").value = benchmark;
     document.getElementById("benchmark-p2").value = benchmark;
 }
-document.getElementById("xp-total").addEventListener("input", updateBenchmark);
 
+// Sync mana fields
+function syncManaFields(id1, id2) {
+    const a = document.getElementById(id1);
+    const b = document.getElementById(id2);
 
+    a.addEventListener("input", () => b.value = a.value);
+    b.addEventListener("input", () => a.value = b.value);
+}
 
+// Calculate skills and saves
+function calculateSkillsAndSaves() {
+    const benchmark = parseInt(document.getElementById("benchmark-p1")?.value || 0);
+
+    for (const [key, id] of Object.entries(skillMap)) {
+        const suffix = id.replace("skill-total-", ""); // e.g., animal-handling
+
+        const ranks = parseInt(document.getElementById(`skill-rank-${suffix}`)?.value || 0);
+        const abilityKey = document.getElementById(`skill-ability-${suffix}`)?.value?.toLowerCase();
+        const abilityScore = abilityKey ? parseInt(document.getElementById(scoreMap[abilityKey])?.value || 0) : 0;
+
+        const total = ranks + abilityScore;
+
+        const el = document.getElementById(id); // full ID already in skillMap
+        if (el) {
+            el.dataset.base = total;
+            el.value = total;
+        }
+    }
+
+    for (const [key, id] of Object.entries(saveMap)) {
+        const suffix = id.replace("save-total-", "");
+
+        const score = parseInt(document.getElementById(`score-${suffix}`)?.value || 0);
+        const isFocused = document.getElementById(`save-focus-${suffix}`)?.checked;
+        const total = score + (isFocused ? benchmark : 0);
+
+        const el = document.getElementById(id);
+        if (el) {
+            el.dataset.base = total;
+            el.value = total;
+        }
+    }
+}
+
+// Feat skill and save bonuses
+function applyFeatSkillAndSaveBonuses() {
+    const bonuses = parseFeatBonuses();
+
+    // Reset all skill/save fields to their base values
+    for (const id of Object.values(skillSaveMap)) {
+        const el = document.getElementById(id);
+        if (el && el.dataset.base) {
+            el.value = parseInt(el.dataset.base);
+        }
+    }
+
+    bonuses.forEach(({ bonus, target }) => {
+        // If the target is a group name, apply to all in that group
+        if (groups[target]) {
+            groups[target].forEach(alias => {
+                const id = skillSaveMap[alias];
+                if (!id) return; // no element for this alias
+                const el = document.getElementById(id);
+                if (el) el.value = parseInt(el.value) + bonus;
+            });
+        } else {
+            // Single target: check skillSaveMap for element id
+            const id = skillSaveMap[target];
+            if (!id) return;
+            const el = document.getElementById(id);
+            if (el) el.value = parseInt(el.value) + bonus;
+        }
+    });
+}
+
+// Calculate passive values
+function calculatePassiveValues() {
+    const getInt = id => parseInt(document.getElementById(id)?.value || 0);
+
+    // Armor class = 7 + defenses skill
+    const defenses = getInt(skillMap["defenses"]);
+    document.getElementById(passiveMap["armorclass"]).value = 7 + defenses;
+
+    // Passive perception = 7 + perception skill
+    const perception = getInt(skillMap["perception"]);
+    document.getElementById(passiveMap["passiveperception"]).value = 7 + perception;
+
+    // Fate dice = luck score
+    const luck = getInt("score-luck");
+    document.getElementById(passiveMap["fatedice"]).value = luck;
+
+    // Initiative = dexterity score
+    const dex = getInt("score-dexterity");
+    document.getElementById(passiveMap["initiative"]).value = dex;
+
+    // Speed stays unchanged (unless modified elsewhere)
+
+    // Spell saves and attack = 7 + magic skill
+    groups.magic.forEach(school => {
+        const skillId = skillMap[school];
+        const val = getInt(skillId);
+        document.getElementById(`atk-${school}`).value = val;
+        document.getElementById(`save-${school}`).value = 7 + val;
+    });
+}
+
+// Feat passive value bonusees
+function applyFeatPassiveValueBonuses() {
+    // Reset passive value fields to base
+    for (const id of Object.values(passiveMap)) {
+        const el = document.getElementById(id);
+        if (el && el.dataset.base) {
+            el.value = parseInt(el.dataset.base);
+        }
+    }
+
+    const bonuses = parseFeatBonuses();
+
+    bonuses.forEach(({ bonus, target }) => {
+        const id = passiveMap[target];
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (el) el.value = parseInt(el.value) + bonus;
+    });
+}
+
+// Death Saves
+function updateDeathSaves() {
+    const con = parseInt(document.getElementById("score-constitution")?.value || 0);
+    const base = Math.max(0, 2 + con); // never below 0
+
+    const container = document.getElementById(passiveMap["deathsavingthrows"]);
+    if (!container) return;
+
+    container.innerHTML = ""; // Clear old boxes
+
+    for (let i = 0; i < base; i++) {
+        const label = document.createElement("label");
+        const box = document.createElement("input");
+        box.type = "checkbox";
+        box.id = `death-save-${i}`;
+        label.appendChild(box);
+        container.appendChild(label);
+    }
+}
 
 // ========== Save and Load Data ==========
 
@@ -300,3 +332,4 @@ function loadData() {
 window.addEventListener("DOMContentLoaded", () => {
     updateAll();
 });
+
