@@ -1,59 +1,63 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    padding: 0;
-    background: none;
+    padding-top: 75px;
+    background: linear-gradient(rgba(255,221,170,0.7), rgba(255,221,170,0.7)), url('https://img.pikbest.com/background/20220119/old-paper-texture-background-image_6225012.jpg!w700wp');;
     color: #520;
-    margin-inline: 12%;
+    margin-inline: 5%;
     position: relative;
     overflow-x: hidden;
 }
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://images.stockcake.com/public/9/c/4/9c424275-3cb4-44f6-9c81-b7ebe22fc986/candlelit-wooden-table-stockcake.jpg') center center no-repeat;
-    background-size: cover;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 1;
+#mobile-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(240, 240, 240, 0.7);
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
-.container {
-    padding: 20px;
-    max-width: 1400px;
-    background: linear-gradient(rgba(255,221,170,0.7), rgba(255,221,170,0.7)), url('https://img.pikbest.com/background/20220119/old-paper-texture-background-image_6225012.jpg!w700wp');
-    /*background: #fda;
-    background-image: url('https://img.pikbest.com/background/20220119/old-paper-texture-background-image_6225012.jpg!w700wp');*/
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    position: relative;
-    margin: 0 auto;
-    padding: 2rem;
-    z-index: 1;
-    border-radius: 20px;
+#mobile-toolbar button {
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+}
+#mobile-toolbar button:hover {
+  background-color: #666;
 }
 .logo {
     font-family: 'Algerian', serif;
-    font-size: 48px;
+    font-size: 36px;
     text-align: center;
     margin-bottom: 10px;
 }
+.box {
+    border: 2px solid #520;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
 .header-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 20px;
 }
 .ability-scores {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     margin-bottom: 20px;
-    gap: 30px;
+    gap: 7%;
 }
 .ability {
     flex: 1;
@@ -61,21 +65,8 @@ body::before {
 }
 .ability input {
     text-align: center;
-    line-height: 48px;
+    line-height: 36px;
     font-size: 28pt;
-}
-.columns {
-    display: flex;
-    gap: 20px;
-}
-.column {
-    flex: 1;
-}
-.box {
-    border: 2px solid #520;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 15px;
 }
 label, input, select, textarea {
     font-family: sans-serif;
@@ -204,7 +195,7 @@ input[type=number] {
 .epic-spell-row {
     display: grid;
     align-items: center;
-    grid-template-columns: 3fr 1fr 2fr 3fr 1fr 3fr 13fr;
+    grid-template-columns: 3fr 1fr 2fr 3fr 1fr 3fr;
 }
 .copyright {
     color: #888;
@@ -224,25 +215,6 @@ input[type=number] {
 #death-saves-container input[type="checkbox"] {
     margin: 0;           /* remove default spacing */
 }
-#floating-buttons {
-    position: fixed;
-    top: 50%;
-    left: 1%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: rgba(240, 240, 240, 0.7);
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
-    box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
-}
-#floating-buttons button {
-    cursor: pointer;
-    padding: 6px 10px;
-    font-weight: bold;
-}
 .mobile-button {
   position: fixed;
   top: 10px;
@@ -255,6 +227,21 @@ input[type=number] {
   border: 1px solid #ccc;
   border-radius: 6px;
 }
+
+.collapsible-heading {
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+.collapsible-content {
+  overflow: hidden;
+  max-height: 1000px;
+  transition: max-height 0.3s ease-out;
+}
+.collapsed .collapsible-content {
+  max-height: 0;
+}
+
 @media print {
     /* Remove all visual effects and background images */
     body, .container {

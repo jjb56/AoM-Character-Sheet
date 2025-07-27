@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Age of Mana Character Sheet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Algerian&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sheetstylemobile.css">
+</head>
+<body>
+  <div id="mobile-toolbar">
+    <button onclick="window.location.href='index.html'">Desktop Version</button>
+    <button onclick="saveData()">Save</button>
+    <button onclick="loadData()">Load</button>
+  </div>
+  <!-- Start page 1 -->
+  <div class="container">
+    <div class="logo">Age of Mana</div>
+    <div class="box">
+      <div class="collapsible-heading">Basics ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="header-grid">
+          <div><label>Character Name</label><input id="character-name" type="text"></div>
+          <div><label>Race</label><input id="race" type="text"></div>
+          <div><label>Background</label><input id="background" type="text"></div>
+          <div><label>Alignment</label><input id="alignment" type="text"></div>
+          <div><label>Class & Levels</label><textarea id="classes" rows="3"></textarea></div>
+          <div><label>Details</label><textarea id="details" rows="3"></textarea></div>
+          <div><label>Total XP</label><input id="xp-total" type="number" value="0"></div>
+          <div><label>Player Name</label><input id="player-name" type="text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Ability Scores ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="ability-scores">
+          <div class="ability"><label class="heading">Strength</label><input id="score-strength" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Dexterity</label><input id="score-dexterity" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Constitution</label><input id="score-constitution" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Intelligence</label><input id="score-intelligence" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Wisdom</label><input id="score-wisdom" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Charisma</label><input id="score-charisma" type="number" value="1"></div>
+          <div class="ability"><label class="heading">Luck</label><input id="score-luck" type="number" value="1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 1 -->
+    <div class="box">
+      <div class="collapsible-heading">Saving Throws ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="save-row"><input id="save-focus-strength" type="checkbox">Strength<input id="save-total-strength" type="number"></div>
+        <div class="save-row"><input id="save-focus-dexterity" type="checkbox">Dexterity<input id="save-total-dexterity" type="number"></div>
+        <div class="save-row"><input id="save-focus-constitution" type="checkbox">Constitution<input id="save-total-constitution" type="number"></div>
+        <div class="save-row"><input id="save-focus-intelligence" type="checkbox">Intelligence<input id="save-total-intelligence" type="number"></div>
+        <div class="save-row"><input id="save-focus-wisdom" type="checkbox">Wisdom<input id="save-total-wisdom" type="number"></div>
+        <div class="save-row"><input id="save-focus-charisma" type="checkbox">Charisma<input id="save-total-charisma" type="number"></div>
+        <div class="save-row"><input id="save-focus-luck" type="checkbox">Luck<input id="save-total-luck" type="number"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="skill-row"><div></div><div class="collapsible-heading">Skills ▾</div><div class="heading">Score</div><div class="heading">Rank</div><div class="heading">Total</div></div>
+      <div class="collapsible-content">
+        <hr> <!-- General Skills -->
+        <div class="skill-row">
+          <input id="skill-focus-acrobatics" type="checkbox">
+          <span>Acrobatics</span>
+          <select id="skill-ability-acrobatics"><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-acrobatics" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-acrobatics" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-animal-handling" type="checkbox">
+          <span>Animal Handling</span>
+          <select id="skill-ability-animal-handling"><option>WIS</option><option>LUC</option></select>
+          <input id="skill-rank-animal-handling" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-animal-handling" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-artificing" type="checkbox">
+          <span>Artificing</span>
+          <select id="skill-ability-artificing"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-artificing" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-artificing" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-athletics" type="checkbox">
+          <span>Athletics</span>
+          <select id="skill-ability-athletics"><option>STR</option><option>LUC</option></select>
+          <input id="skill-rank-athletics" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-athletics" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-insight" type="checkbox">
+          <span>Insight</span>
+          <select id="skill-ability-insight"><option>WIS</option><option>LUC</option></select>
+          <input id="skill-rank-insight" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-insight" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-intimidation" type="checkbox">
+          <span>Intimidation</span>
+          <select id="skill-ability-intimidation"><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-intimidation" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-intimidation" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-perception" type="checkbox">
+          <span>Perception</span>
+          <select id="skill-ability-perception"><option>WIS</option><option>LUC</option></select>
+          <input id="skill-rank-perception" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-perception" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-persuasion" type="checkbox">
+          <span>Persuasion</span>
+          <select id="skill-ability-persuasion"><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-persuasion" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-persuasion" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-stealth" type="checkbox">
+          <span>Stealth</span>
+          <select id="skill-ability-stealth"><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-stealth" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-stealth" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-survival" type="checkbox">
+          <span>Survival</span>
+          <select id="skill-ability-survival"><option>WIS</option><option>LUC</option></select>
+          <input id="skill-rank-survival" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-survival" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-theatrics" type="checkbox">
+          <span>Theatrics</span>
+          <select id="skill-ability-theatrics"><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-theatrics" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-theatrics" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-trickery" type="checkbox">
+          <span>Trickery</span>
+          <select id="skill-ability-trickery"><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-trickery" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-trickery" type="number" placeholder="Total">
+        </div>
+        <hr> <!-- Knowledge Skills -->
+        <div class="skill-row">
+          <input id="skill-focus-anatomy" type="checkbox">
+          <span>Anatomy</span>
+          <select id="skill-ability-anatomy"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-anatomy" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-anatomy" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-arcana" type="checkbox">
+          <span>Arcana</span>
+          <select id="skill-ability-arcana"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-arcana" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-arcana" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-history" type="checkbox">
+          <span>History</span>
+          <select id="skill-ability-history"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-history" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-history" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-nature" type="checkbox">
+          <span>Nature</span>
+          <select id="skill-ability-nature"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-nature" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-nature" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-religion" type="checkbox">
+          <span>Religion</span>
+          <select id="skill-ability-religion"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-religion" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-religion" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-society" type="checkbox">
+          <span>Society</span>
+          <select id="skill-ability-society"><option>INT</option><option>LUC</option></select>
+          <input id="skill-rank-society" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-society" type="number" placeholder="Total">
+        </div>
+        <hr> <!-- Combat Skills -->
+        <div class="skill-row">
+          <input id="skill-focus-defenses" type="checkbox">
+          <span>Defenses</span>
+          <select id="skill-ability-defenses"><option>DEX</option><option>CON</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-defenses" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-defenses" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-melee" type="checkbox">
+          <span>Melee</span>
+          <select id="skill-ability-melee"><option>STR</option><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-melee" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-melee" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-ranged" type="checkbox">
+          <span>Ranged</span>
+          <select id="skill-ability-ranged"><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-ranged" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-ranged" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-unarmed" type="checkbox">
+          <span>Unarmed</span>
+          <select id="skill-ability-unarmed"><option>STR</option><option>DEX</option><option>LUC</option></select>
+          <input id="skill-rank-unarmed" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-unarmed" type="number" placeholder="Total">
+        </div>
+        <hr> <!-- Magic Skills -->
+        <div class="skill-row">
+          <input id="skill-focus-alteration" type="checkbox">
+          <span>Alteration</span>
+          <select id="skill-ability-alteration"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-alteration" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-alteration" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-clarity" type="checkbox">
+          <span>Clarity</span>
+          <select id="skill-ability-clarity"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-clarity" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-clarity" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-energy" type="checkbox">
+          <span>Energy</span>
+          <select id="skill-ability-energy"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-energy" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-energy" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-essence" type="checkbox">
+          <span>Essence</span>
+          <select id="skill-ability-essence"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-essence" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-essence" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-illusion" type="checkbox">
+          <span>Illusion</span>
+          <select id="skill-ability-illusion"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-illusion" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-illusion" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-influence" type="checkbox">
+          <span>Influence</span>
+          <select id="skill-ability-influence"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-influence" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-influence" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-protection" type="checkbox">
+          <span>Protection</span>
+          <select id="skill-ability-protection"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-protection" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-protection" type="number" placeholder="Total">
+        </div>
+        <div class="skill-row">
+          <input id="skill-focus-summoning" type="checkbox">
+          <span>Summoning</span>
+          <select id="skill-ability-summoning"><option>INT</option><option>WIS</option><option>CHA</option><option>LUC</option></select>
+          <input id="skill-rank-summoning" type="number" placeholder="Rank" value="0">
+          <input id="skill-total-summoning" type="number" placeholder="Total">
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="defense-stat-row">
+        <div>Arm. Class<input id="armor-class" type="number"></div>
+        <div>Reduction<input id="reduction" type="number"></div>
+        <div>Initiative<input id="initiative" type="number"></div>
+        <div>Speed<input id="speed" type="number"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="heading">Hit Points</div>
+      <hr>
+      <div class="basics-row">
+        <div>Current<input id="hit-points-current" type="number"></div>
+        <div>Maximum<input id="hit-points-maximum" type="number"></div>
+        <div>Temporary<input id="hit-points-temporary" type="number"></div>
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="basics-row">
+        <div>Unspent XP<input id="xp-unspent" type="text"></div>
+        <div>Current Mana<input id="mana-current-p1" type="number"></div>
+        <div>Death Saves<div id="death-saves-container"></div></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Weapons ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="weapon-row">
+          <input id="weapon-name-1" type="text" placeholder="Name">
+          <input id="weapon-range-1" type="text" placeholder="Range">
+          <input id="weapon-atk-1" type="number" placeholder="Atk">
+          <input id="weapon-dmg-1" type="text" placeholder="Dmg">
+        </div>
+        <div class="weapon-row">
+          <input id="weapon-name-2" type="text" placeholder="Name">
+          <input id="weapon-range-2" placeholder="Range">
+          <input id="weapon-atk-2" type="number" placeholder="Atk">
+          <input id="weapon-dmg-2" type="text" placeholder="Dmg">
+        </div>
+        <div class="weapon-row">
+          <input id="weapon-name-3" type="text" placeholder="Name">
+          <input id="weapon-range-3" placeholder="Range">
+          <input id="weapon-atk-3" type="number" placeholder="Atk">
+          <input id="weapon-dmg-3" type="text" placeholder="Dmg">
+        </div>
+        <div class="weapon-row">
+          <input id="weapon-name-4" type="text" placeholder="Name">
+          <input id="weapon-range-4" placeholder="Range">
+          <input id="weapon-atk-4" type="number" placeholder="Atk">
+          <input id="weapon-dmg-4" type="text" placeholder="Dmg">
+        </div>
+        <div class="weapon-row">
+          <input id="weapon-name-5" type="text" placeholder="Name">
+          <input id="weapon-range-5" placeholder="Range">
+          <input id="weapon-atk-5" type="number" placeholder="Atk">
+          <input id="weapon-dmg-5" type="text" placeholder="Dmg">
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Armor ▾</div>
+      <div class="collapsible-content">
+        <div class="armor-row">
+          <input id="armor-name" type="text" placeholder="Name">
+          <input id="armor-class-bonus-armor" type="number" placeholder="Arm">
+          <input id="reduction-bonus-armor" type="number" placeholder="Red">
+        </div>
+        <div class="heading">Shield</div>
+        <div class="armor-row">
+          <input id="shield-name" type="text" placeholder="Name">
+          <input id="armor-class-bonus-shield" type="number" placeholder="Arm">
+          <input id="reduction-bonus-shield" type="number" placeholder="Red">
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Inventory ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="row">CP<input id="coins-copper" type="number"> SP<input id="coins-silver" type="number"> GP<input id="coins-gold" type="number"> PP<input id="coins-platinum" type="number"></div>
+        <textarea id="inventory" rows="18"></textarea>
+      </div>
+    </div>
+
+    <div class="box">
+      <label>Passive Perception</label>
+      <input id="perception-passive" type="number">
+      <label>Senses</label>
+      <textarea id="senses" rows="2"></textarea>
+    </div>
+
+    <div class="box">
+      <div class="basics-row">
+        <div>Benchmark<input id="benchmark-p1" type="number" readonly></div>
+        <div>Hit Dice<input id="hit-dice" type="text"></div>
+        <div>Fate Dice<input id="fate-dice-total" type="number"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Feats and Features ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <textarea id="feat-1" rows="3"></textarea>
+        <textarea id="feat-2" rows="3"></textarea>
+        <textarea id="feat-3" rows="3"></textarea>
+        <textarea id="feat-4" rows="3"></textarea>
+        <textarea id="feat-5" rows="3"></textarea>
+        <textarea id="feat-6" rows="3"></textarea>
+        <textarea id="feat-7" rows="3"></textarea>
+        <textarea id="feat-8" rows="3"></textarea>
+        <textarea id="feat-9" rows="3"></textarea>
+        <textarea id="feat-10" rows="3"></textarea>
+        <textarea id="feat-11" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="box">
+      <div  class="collapsible-heading">Proficiencies ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <textarea id="proficiencies" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="logo">Spells</div>
+
+    <div class="box">
+      <div class="collapsible-heading">Mana ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="mana-zone">
+          <div>Maximum<input id="mana-maximum" type="number"></div>
+          <div>Current<input id="mana-current-p2" type="number"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="constant-zone">
+        <div>Benchmark<input id="benchmark-p2" type="number" readonly></div>
+        <div>Spells Preparable<input id="spells-preparable" type="number"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="spell-skills"><div class="collapsible-heading">Skill ▾</div><div class="heading">Atk</div><div class="heading">DC</div></div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-skills">Alteration<input id="atk-alteration" type="text"><input id="save-alteration" type="text" readonly></div>
+        <div class="spell-skills">Clarity<input id="atk-clarity" type="text"><input id="save-clarity" type="text" readonly></div>
+        <div class="spell-skills">Energy<input id="atk-energy" type="text"><input id="save-energy" type="text" readonly></div>
+        <div class="spell-skills">Essence<input id="atk-essence" type="text"><input id="save-essence" type="text" readonly></div>
+        <div class="spell-skills">Illusion<input id="atk-illusion" type="text"><input id="save-illusion" type="text" readonly></div>
+        <div class="spell-skills">Influence<input id="atk-influence" type="text"><input id="save-influence" type="text" readonly></div>
+        <div class="spell-skills">Protection<input id="atk-protection" type="text"><input id="save-protection" type="text" readonly></div>
+        <div class="spell-skills">Summoning<input id="atk-summoning" type="text"><input id="save-summoning" type="text" readonly></div>
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="collapsible-heading">Notes ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <textarea id="notes" placeholder="notes" rows="13"></textarea>
+      </div>
+    </div>
+
+    <!-- Ranked Spells -->
+    <div class="box">
+      <div class="collapsible-heading">Cantrips ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-1" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-2" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-3" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-4" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-5" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r0-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r0-components-6" type="text" placeholder="Components">
+            <select id="spell-r0-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r0-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r0-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r0-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Rank 1 Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-1" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-2" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-3" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-4" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-5" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r1-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r1-components-6" type="text" placeholder="Components">
+            <select id="spell-r1-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r1-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r1-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r1-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Rank 2 Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-1" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-2" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-3" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-4" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-5" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r2-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r2-components-6" type="text" placeholder="Components">
+            <select id="spell-r2-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r2-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r2-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Rank 3 Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-1" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-2" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-3" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-4" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-5" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r3-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r3-components-6" type="text" placeholder="Components">
+            <select id="spell-r3-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r3-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r3-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+  
+    <div class="box">
+      <div class="collapsible-heading">Rank 4 Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-1" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r4-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-2" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r4-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-3" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r4-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-4" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-5" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r4-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r4-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r4-components-6" type="text" placeholder="Components">
+            <select id="spell-r4-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r4-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r4-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r4-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="collapsible-heading">Rank 5 Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-1" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-1" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r5-description-1" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-2" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-2" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-2"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-2" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-2"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r5-description-2" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-3" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-3" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-3"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-3" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-3"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r5-description-3" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-4" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-4" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-4"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-4" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-4"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r2-description-4" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-5" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-5" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-5"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-5" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-5"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r5-description-5" rows="2" placeholder="Spell Description"></textarea>
+        </div><div class="spell-area">
+          <div class="spell-row">
+            <input id="spell-r5-name-6" type="text" placeholder="Spell Name">
+            <input id="spell-r5-components-6" type="text" placeholder="Components">
+            <select id="spell-r5-magic-skill-6"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-r5-cost-6" type="text" placeholder="Cost">
+            <select id="spell-r5-knowledge-skill-6"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-r3-description-6" rows="2" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Epic Spells -->
+    <div class="box">
+      <div class="collapsible-heading">Epic Spells ▾</div>
+      <div class="collapsible-content">
+        <hr>
+        <div class="spell-area">
+          <div class="epic-spell-row">
+            <input id="spell-epic-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-epic-rank-1" type="text" placeholder="Rank">
+            <input id="spell-epic-requirements-1" type="text" placeholder="Requirements">
+            <select id="spell-epic-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-epic-cost-1" type="text" placeholder="Cost">
+            <select id="spell-epic-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-epic-description-1" rows="3" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="epic-spell-row">
+            <input id="spell-epic-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-epic-rank-1" type="text" placeholder="Rank">
+            <input id="spell-epic-requirements-1" type="text" placeholder="Requirements">
+            <select id="spell-epic-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-epic-cost-1" type="text" placeholder="Cost">
+            <select id="spell-epic-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-epic-description-1" rows="3" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="epic-spell-row">
+            <input id="spell-epic-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-epic-rank-1" type="text" placeholder="Rank">
+            <input id="spell-epic-requirements-1" type="text" placeholder="Requirements">
+            <select id="spell-epic-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-epic-cost-1" type="text" placeholder="Cost">
+            <select id="spell-epic-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-epic-description-1" rows="3" placeholder="Spell Description"></textarea>
+        </div>
+        <div class="spell-area">
+          <div class="epic-spell-row">
+            <input id="spell-epic-name-1" type="text" placeholder="Spell Name">
+            <input id="spell-epic-rank-1" type="text" placeholder="Rank">
+            <input id="spell-epic-requirements-1" type="text" placeholder="Requirements">
+            <select id="spell-epic-magic-skill-1"><option>Alteration</option><option>Clarity</option><option>Energy</option><option>Essence</option><option>Illusion</option><option>Influence</option><option>Protection</option><option>Summoning</option></select>
+            <input id="spell-epic-cost-1" type="text" placeholder="Cost">
+            <select id="spell-epic-knowledge-skill-1"><option>Anatomy</option><option>Arcana</option><option>History</option><option>Nature</option><option>Religion</option><option>Society</option></select>
+          </div>
+          <textarea id="spell-epic-description-1" rows="3" placeholder="Spell Description"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="copyright">Copyright &copy; Jeremy Barnes 2025. Permission is granted to print or modify this page for personal use only.</div>
+  <br>
+
+  <!-- JavaScript -->
+  <script src="sheetscripts.js"></script>
+</body>
+</html>

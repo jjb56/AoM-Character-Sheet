@@ -233,7 +233,7 @@ function calculatePassiveValues() {
     });
 }
 
-// Feat passive value bonusees
+// Feat passive value bonuses
 function applyFeatPassiveValueBonuses() {
     // Reset passive value fields to base
     for (const id of Object.values(passiveMap)) {
@@ -256,18 +256,28 @@ function applyFeatPassiveValueBonuses() {
 // Death Saves
 function updateDeathSaves() {
     const con = parseInt(document.getElementById("score-constitution")?.value || 0);
-    const base = Math.max(0, 2 + con); // never below 0
+    const base = 2 + con;
+
+    // Get feat bonuses
+    const featBonuses = parseFeatBonuses();
+    const featBonus = featBonuses
+        .filter(b => b.target === "deathsavingthrows")
+        .reduce((sum, b) => sum + b.bonus, 0);
+
+    const total = Math.max(0, base + featBonus); // Ensure non-negative
 
     const container = document.getElementById(passiveMap["deathsavingthrows"]);
     if (!container) return;
 
-    container.innerHTML = ""; // Clear old boxes
+    container.innerHTML = ""; // Clear existing boxes
 
-    for (let i = 0; i < base; i++) {
+    for (let i = 0; i < total; i++) {
         const label = document.createElement("label");
+
         const box = document.createElement("input");
         box.type = "checkbox";
         box.id = `death-save-${i}`;
+
         label.appendChild(box);
         container.appendChild(label);
     }
@@ -374,9 +384,20 @@ window.addEventListener("beforeunload", function (e) {
     }
 });
 
+// ========== Collapsing Boxes ==========
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".collapsible-heading").forEach((heading) => {
+    heading.addEventListener("click", () => {
+      const box = heading.closest(".box");
+      box.classList.toggle("collapsed");
+    });
+  });
+  heading.textContent = heading.textContent.replace(/^▸/, '▾'); // opened
+});
+
 // ========== Page Load ==========
 
 window.addEventListener("DOMContentLoaded", () => {
     updateAll();
 });
-
