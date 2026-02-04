@@ -8,7 +8,7 @@ const saveMap = { //saving throws
     "intelligencesavingthrow": "save-total-intelligence",
     "wisdomsavingthrow": "save-total-wisdom",
     "charismasavingthrow": "save-total-charisma",
-    "lucksavingthrow": "save-total-luck"
+    "destinysavingthrow": "save-total-destiny"
 };
 const skillMap = { //skills
     "acrobatics": "skill-total-acrobatics",
@@ -70,7 +70,7 @@ const scoreMap = {
     int: "score-intelligence",
     wis: "score-wisdom",
     cha: "score-charisma",
-    luc: "score-luck"
+    des: "score-destiny"
 };
 
 
@@ -214,9 +214,9 @@ function calculatePassiveValues() {
     const perception = getInt(skillMap["perception"]);
     document.getElementById(passiveMap["passiveperception"]).value = 7 + perception;
 
-    // Fate dice = luck score
-    const luck = getInt("score-luck");
-    document.getElementById(passiveMap["fatedice"]).value = luck;
+    // Fate dice = destiny score
+    const destiny = getInt("score-destiny");
+    document.getElementById(passiveMap["fatedice"]).value = destiny;
 
     // Initiative = dexterity score
     const dex = getInt("score-dexterity");
