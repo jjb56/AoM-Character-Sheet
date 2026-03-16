@@ -208,7 +208,15 @@ function calculatePassiveValues() {
 
     // Armor class = 7 + defenses skill
     const defenses = getInt(skillMap["defenses"]);
-    document.getElementById(passiveMap["armorclass"]).value = 7 + defenses;
+    const armDef = Number(document.getElementById("armor-class-bonus-armor").value);
+    const shieldDef = Number(document.getElementById("armor-class-bonus-shield").value);
+    document.getElementById(passiveMap["armorclass"]).value = 7 + defenses + armDef + shieldDef;
+
+    // Soak
+    const con = getInt("score-constitution");
+    const armSoak = Number(document.getElementById("reduction-bonus-armor").value);
+    const shieldSoak = Number(document.getElementById("reduction-bonus-shield").value);
+    document.getElementById(passiveMap["damagereduction"]).value = con + armSoak + shieldSoak;
 
     // Passive perception = 7 + perception skill
     const perception = getInt(skillMap["perception"]);
